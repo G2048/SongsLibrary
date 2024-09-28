@@ -60,7 +60,7 @@ out/
 atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
-.idea/replstate.xml
+.idea/replstate.xmlG
 
 # SonarLint plugin
 .idea/sonarlint/
@@ -81,4 +81,4 @@ fabric.properties
 tmp/*
 *.exe
 .air.toml
-
+.env
