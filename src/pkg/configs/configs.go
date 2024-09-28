@@ -1,5 +1,7 @@
 package configs
 
+import "github.com/joho/godotenv"
+
 type AppSettings struct {
     AppName    string
     AppVersion string
@@ -20,15 +22,21 @@ func (s ServerSettings) FullServerAddress() string {
     return s.Host + ":" + s.Port
 }
 func NewServerSettings() *ServerSettings {
+    env, err := godotenv.Read()
+    if err != nil {
+        panic(err)
+    }
+
     return &ServerSettings{
         LogSettings: LogSettings{
             AppSettings: AppSettings{
                 AppName:    "SongsLibrary",
                 AppVersion: "1.0.0",
             },
-            LogLevel: "debug",
+
+            LogLevel: env["logLevel"],
         },
-        Port: "3333",
-        Host: "0.0.0.0",
+        Port: env["port"],
+        Host: env["host"],
     }
 }
