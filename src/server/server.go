@@ -25,14 +25,14 @@ type Server struct {
 }
 
 func (s *Server) Start() {
-    r := chi.NewRouter()
 
-    r.Use(middleware.Logger)
-    r.Use(middleware.Recoverer)
-    r.Use(middleware.RequestID)
+    s.router.Use(middleware.Recoverer)
+    s.router.Use(middleware.RequestID)
     s.router.Use(middleware.RealIP)
     s.router.Use(httplog.RequestLogger(s.logger))
-    r.Use(middleware.Heartbeat("/ping"))
+    s.router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
+        w.Write([]byte("pong"))
+    })
 
     go func() {
         err := s.server.ListenAndServe()
@@ -45,7 +45,14 @@ func (s *Server) Start() {
         }
     }()
 }
-func (s *Server) AddRouter() {
+
+type RoutersInterface interface {
+    Path() string
+    Router() *chi.Mux
+}
+
+func (s *Server) AddRouter(router RoutersInterface) {
+    s.router.Mount(router.Path(), router.Router())
 }
 
 func (s *Server) Stop() {
@@ -68,14 +75,21 @@ func (s *Server) Stop() {
 func NewServer(settings configs.ServerSettings) *Server {
     logger := logs.NewHttpLogger(settings.LogSettings)
     logger.Info("Starting server")
+    logger.Debug(fmt.Sprintf("Server Port: %s", settings.Port))
 
+    router := chi.NewRouter()
     server := &http.Server{
-        Addr: settings.FullServerAddress(),
+        Addr:    settings.FullServerAddress(),
+        Handler: router,
     }
 
     return &Server{
-        router: chi.NewRouter(),
+        router: router,
         logger: logger,
         server: server,
     }
 }
+
+// func RequestLogger(logger *httplog.Logger, strings []string) http.Handler {
+//
+// }
