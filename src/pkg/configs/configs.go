@@ -39,3 +39,26 @@ func NewServerSettings() *ServerSettings {
         Host: env["host"],
     }
 }
+
+type PostgresConfig struct {
+    LogSettings
+    DSN string
+}
+
+func NewPostgresConfig() *PostgresConfig {
+    env, err := godotenv.Read()
+    if err != nil {
+        panic(err)
+    }
+
+    return &PostgresConfig{
+        LogSettings: LogSettings{
+            AppSettings: AppSettings{
+                AppName:    env["appname"],
+                AppVersion: env["appversion"],
+            },
+            LogLevel: env["logLevel"],
+        },
+        DSN: env["dsn"],
+    }
+}
