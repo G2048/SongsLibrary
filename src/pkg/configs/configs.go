@@ -30,10 +30,9 @@ func NewServerSettings() *ServerSettings {
     return &ServerSettings{
         LogSettings: LogSettings{
             AppSettings: AppSettings{
-                AppName:    "SongsLibrary",
-                AppVersion: "1.0.0",
+                AppName:    env["appname"],
+                AppVersion: env["appversion"],
             },
-
             LogLevel: env["logLevel"],
         },
         Port: env["port"],
