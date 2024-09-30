@@ -20,3 +20,19 @@ services:
         limits:
           cpus: '1'
           memory: '512M'
+  songs_library:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:8080"
+    # Important to bind/mount your codebase dir to /app dir for live reload
+    volumes:
+      - .:/SongsLibrary
+    environment:
+      - appname="SongsLibrary"
+      - appversion="1.0.0"
+      - loglevel="debug"
+      - port="8080"
+      - host="0.0.0.0"
+      - dsn="postgres://librarian:librarian@0.0.0.0:5432/library?sslmode=disable"
