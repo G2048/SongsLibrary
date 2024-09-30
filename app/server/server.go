@@ -59,6 +59,7 @@ func (s *Server) Start() {
             os.Exit(0)
         default:
             s.logger.Error(fmt.Sprintf("Failed to start server: %s", err.Error()))
+            os.Exit(-1)
         }
     }()
 }
