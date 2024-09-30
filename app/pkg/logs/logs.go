@@ -4,7 +4,7 @@ import (
     "log/slog"
     "time"
 
-    "SongsLibrary/src/pkg/configs"
+    "SongsLibrary/app/pkg/configs"
     "github.com/go-chi/httplog/v2"
 )
 

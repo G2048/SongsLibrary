@@ -1,7 +1,7 @@
 package repositories
 
 import (
-    "SongsLibrary/src/internal/databases"
+    "SongsLibrary/app/internal/databases"
     // "SongsLibrary/src/pkg/controllers"
     "github.com/jackc/pgx/v5"
 )

@@ -1,6 +1,8 @@
 package controllers
 
-import "SongsLibrary/src/pkg/repositories"
+import (
+    "SongsLibrary/app/pkg/repositories"
+)
 
 type Controller struct {
     Repository repositories.Repository

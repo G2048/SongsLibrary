@@ -1,6 +1,8 @@
 package repositories
 
-import "SongsLibrary/src/pkg/controllers"
+import (
+    "SongsLibrary/app/pkg/controllers"
+)
 
 type Repository interface {
     Create()

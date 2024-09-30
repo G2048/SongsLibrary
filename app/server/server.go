@@ -9,11 +9,12 @@ import (
     "os/signal"
     "time"
 
-    "SongsLibrary/src/pkg/configs"
-    "SongsLibrary/src/pkg/logs"
+    "SongsLibrary/app/pkg/configs"
+    "SongsLibrary/app/pkg/logs"
     "github.com/go-chi/chi/v5"
     "github.com/go-chi/chi/v5/middleware"
     "github.com/go-chi/httplog/v2"
+    httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
 type Server struct {
@@ -24,8 +25,21 @@ type Server struct {
     server  *http.Server
 }
 
-func (s *Server) Start() {
+// @title Swagger Example API
+// @version 1.0
+// @description This is a sample server Petstore server.
+// @termsOfService http://swagger.io/terms/
 
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host petstore.swagger.io
+// @BasePath /v2
+func (s *Server) Start() {
     s.router.Use(middleware.Recoverer)
     s.router.Use(middleware.RequestID)
     s.router.Use(middleware.RealIP)
@@ -33,6 +47,9 @@ func (s *Server) Start() {
     s.router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
         w.Write([]byte("pong"))
     })
+    s.router.Get("/swagger/*", httpSwagger.Handler(
+        httpSwagger.URL("http://localhost:1323/swagger/doc.json"), // The url pointing to API definition
+    ))
 
     go func() {
         err := s.server.ListenAndServe()

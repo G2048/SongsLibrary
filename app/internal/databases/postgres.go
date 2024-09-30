@@ -6,8 +6,8 @@ import (
     "os"
     "time"
 
-    "SongsLibrary/src/pkg/configs"
-    "SongsLibrary/src/pkg/logs"
+    "SongsLibrary/app/pkg/configs"
+    "SongsLibrary/app/pkg/logs"
     "github.com/jackc/pgx/v5"
 )
 

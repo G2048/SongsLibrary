@@ -7,7 +7,7 @@ import (
     "fmt"
     "log"
 
-    "SongsLibrary/src/pkg/configs"
+    "SongsLibrary/app/pkg/configs"
     "github.com/golang-migrate/migrate/v4"
     "github.com/golang-migrate/migrate/v4/database/postgres"
     "github.com/golang-migrate/migrate/v4/source"
