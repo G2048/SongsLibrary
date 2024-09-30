@@ -1,6 +1,10 @@
 package configs
 
-import "github.com/joho/godotenv"
+import (
+    "os"
+
+    "github.com/joho/godotenv"
+)
 
 type AppSettings struct {
     AppName    string
@@ -24,7 +28,17 @@ func (s ServerSettings) FullServerAddress() string {
 func NewServerSettings() *ServerSettings {
     env, err := godotenv.Read()
     if err != nil {
-        panic(err)
+        return &ServerSettings{
+            LogSettings: LogSettings{
+                AppSettings: AppSettings{
+                    AppName:    os.Getenv("appname"),
+                    AppVersion: os.Getenv("appversion"),
+                },
+                LogLevel: os.Getenv("logLevel"),
+            },
+            Port: os.Getenv("port"),
+            Host: os.Getenv("host"),
+        }
     }
 
     return &ServerSettings{
@@ -47,8 +61,19 @@ type PostgresConfig struct {
 
 func NewPostgresConfig() *PostgresConfig {
     env, err := godotenv.Read()
+
     if err != nil {
-        panic(err)
+        // panic(err)
+        return &PostgresConfig{
+            LogSettings: LogSettings{
+                AppSettings: AppSettings{
+                    AppName:    os.Getenv("appname"),
+                    AppVersion: os.Getenv("appversion"),
+                },
+                LogLevel: os.Getenv("logLevel"),
+            },
+            DSN: os.Getenv("dsn"),
+        }
     }
 
     return &PostgresConfig{

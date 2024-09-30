@@ -1,14 +1,15 @@
 FROM golang:1.23-alpine
 LABEL authors="IX"
 
-WORKDIR /SongsLibrary
+WORKDIR /usr/local/go/src/SongsLibrary
 RUN go install github.com/air-verse/air@latest
 
-COPY go.mod go.sum /SongsLibrary/
+COPY go.mod go.sum /usr/local/go/src/SongsLibrary/
 RUN go mod download
 
-COPY app/* /SongsLibrary
+COPY app /usr/local/go/src/SongsLibrary/app
 COPY air.toml .
+#COPY .env .env
 
 EXPOSE 4000:8080
 
