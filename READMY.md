@@ -10,6 +10,17 @@ dsn="postgres://librarian:librarian@0.0.0.0:5432/library?sslmode=disable"
 ```
 
 
+## Run Docker-compose:
+```zsh
+docker-compose up -d
+```
+
+## Run only server:
+```zsh
+docker run -p 4000:8080 -v app/ -v /app/tmp songslibrary-songs_library
+```
+
+
 ## For developers
 
 ```zsh
